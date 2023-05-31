@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main.html}" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Rent car</title>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <br />
+    <br />
+    <h3>Rent car</h3>
+    <form th:action="@{/rent/{id}/proceed(id=${car.getId()!=null?car.getId():0})}" method="POST">
+        <label for="dateFrom">Date from</label>
+        <input type="datetime-locale"
+               id="dateFrom"
+               name="dateFrom"
+               th:value="${dateFrom}">
+        <br />
+        <label for="rentLength">Rent length</label>
+        <input type="number"
+               id="rentLength"
+               name="rentLength"
+               min="1"
+               th:value="${rentLength}">
+        <button class="btn btn-md btn btn-success btn-blrock" name="Submit" value="Submit" type="Submit"
+                th:text="Reserve"></button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<body>
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">CarRental</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/user/list' ? 'active':''}"
+                    sec:authorize="hasAnyRole('ROLE_ADMIN')" class="nav-item">
+                    <a class="nav-link" th:href="@{/user/list}">Users</a>
+                </li>
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/car/add' ? 'active':''}"
+                    sec:authorize="hasAnyRole('ROLE_OWNER', 'ROLE_ADMIN')" class="nav-item">
+                    <a class="nav-link" th:href="@{/car/add}">Add car</a>
+                </li>
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/rent/list' ? 'active':''}"
+                    sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" th:href="@{/rent/list}">Rents</a>
+                </li>
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/registration' ? 'active':''}"
+                    sec:authorize="isAnonymous()" class="nav-item">
+                    <a class="nav-link" th:href="@{/registration}">Register</a>
+                </li>
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/login' ? 'active':''}"
+                    sec:authorize="isAnonymous()" class="nav-item">
+                    <a class="nav-link" th:href="@{/login}">Login</a>
+                </li>
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/car/list' ? 'active':''}"
+                    class="nav-item">
+                    <a class="nav-link" th:href="@{/car/list}">Cars</a>
+                </li>
+
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main.html}" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Rents</title>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div th:if="${operationDetails != null && operationDetails.getOperationStatus() != null}" class="row pt-5">
+        <div th:class="${operationDetails.getOperationStatus().isValid() ? 'alert-success' : 'alert-danger'} + ' alert alert-dismissible fade show w-100'">
+            <span th:text="${operationDetails.getMessage()}"></span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <div th:if="${!pending.isEmpty()}" class="row p-2 d-flex justify-content-center">
+        <div class="row w-100">
+            <h3>Pending</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Payment</th>
+                    <th scope="col">Date from</th>
+                    <th scope="col">Date to</th>
+                    <th scope="col">Confirm</th>
+                    <th scope="col">Cancel</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="rent : ${pending}">
+                    <td th:text="${rent.getCar().getBrand()}"></td>
+                    <td th:text="${rent.getCar().getModel()}"></td>
+                    <td th:text="${rent.getPayment()}"></td>
+                    <td th:text="${rent.getRentDate()}"></td>
+                    <td th:text="${rent.getEndRentDateString()}"></td>
+                    <td>
+                        <a class="btn btn-success" th:href="@{/rent/{id}/confirm(id=${rent.getId()})}"
+                           style="color: #ffffff"><i class="far fa-check-square mx-auto"></i></a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" th:href="@{/rent/{id}/remove(id=${rent.getId()})}"
+                           style="color: #ffffff"><i
+                                class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div th:if="${!confirmed.isEmpty()}" class="row p-2 d-flex justify-content-center">
+        <div class="row w-100">
+            <h3>Confirmed</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Payment</th>
+                    <th scope="col">Date from</th>
+                    <th scope="col">Date to</th>
+                    <th scope="col">Confirm</th>
+                    <th scope="col">Cancel</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="rent : ${confirmed}">
+                    <td th:text="${rent.getCar().getBrand()}"></td>
+                    <td th:text="${rent.getCar().getModel()}"></td>
+                    <td th:text="${rent.getPayment()}"></td>
+                    <td th:text="${rent.getRentDate()}"></td>
+                    <td th:text="${rent.getEndRentDateString()}"></td>
+                    <td>
+                        <a class="btn btn-success disabled" th:href="@{/rent/{id}/confirm(id=${rent.getId()})}"
+                           style="color: #ffffff"><i class="far fa-check-square mx-auto"></i></a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" th:href="@{/rent/{id}/remove(id=${rent.getId()})}"
+                           style="color: #ffffff"><i
+                                class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div th:if="${!finished.isEmpty()}" class="row p-2 d-flex justify-content-center">
+        <div class="row w-100">
+            <h3>Finished</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Payment</th>
+                    <th scope="col">Date from</th>
+                    <th scope="col">Date to</th>
+                    <th scope="col">Confirm</th>
+                    <th scope="col">Cancel</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="rent : ${finished}">
+                    <td th:text="${rent.getCar().getBrand()}"></td>
+                    <td th:text="${rent.getCar().getModel()}"></td>
+                    <td th:text="${rent.getPayment()}"></td>
+                    <td th:text="${rent.getRentDate()}"></td>
+                    <td th:text="${rent.getEndRentDateString()}"></td>
+                    <td>
+                        <a class="btn btn-success disabled" th:href="@{/rent/{id}/confirm(id=${rent.getId()})}"
+                           style="color: #ffffff"><i class="far fa-check-square mx-auto"></i></a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger disabled" th:href="@{/rent/{id}/remove(id=${rent.getId()})}"
+                           style="color: #ffffff"><i
+                                class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

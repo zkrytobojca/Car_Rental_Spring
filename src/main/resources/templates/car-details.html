@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main.html}" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Car details</title>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <br />
+    <br />
+    <h3 th:text="${car.getBrand()} + ' ' + ${car.getModel()}"><span class="badge badge-secondary">Reserved</span></h3>
+    <div class="float-right" style="padding">
+        <img th:src="@{'data:image/png;base64,' + ${car.getImageEncoded()}}" class="img-thumbnail" style="width: 31rem;height: 22rem">
+    </div>
+    <ul class="list-group">
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item w-25">Brand</li>
+            <li class="list-group-item w-50" th:text="${car.getBrand()}"></li>
+        </ul>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item w-25">Model</li>
+            <li class="list-group-item w-50" th:text="${car.getModel()}"></li>
+        </ul>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item w-25">Production year</li>
+            <li class="list-group-item w-50" th:text="${car.getProductionYear()}"></li>
+        </ul>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item w-25">Mileage</li>
+            <li class="list-group-item w-50" th:text="${car.getMileage()}"></li>
+        </ul>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item w-25">Price for a day</li>
+            <li class="list-group-item w-50" th:text="${car.getRentPrice()}"></li>
+        </ul>
+        <div sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
+            <ul class="list-group list-group-horizontal">
+                <li class="list-group-item w-25">Reserved by</li>
+                <li class="list-group-item w-50" th:text="${rent == null ? '-' : rent.getUser().getUsername()}"></li>
+            </ul>
+        </div>
+        <div th:class="${!car.isAvailable() ? 'visible' : 'invisible'}">
+            <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item w-25">Reserved until</li>
+                    <li class="list-group-item w-50" th:text="${rent == null ? 0 : rent.getEndRentDateString()}"></li>
+            </ul>
+        </div>
+    </ul>
+    <br />
+    <div th:class="${car.isAvailable() ? 'visible' : 'invisible'}">
+        <a sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_OWNER', 'ROLE_ADMIN')" th:href="@{|/car/${car.getId()}/rent|}">Rent car</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main.html}" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CarRental</title>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="row">
+        <div class="grid">
+            <div th:each="car: ${carList}" th:class="card + ${car.isAvailable() ? '' : ' reserved-car'}">
+                <img class="card-img-top" th:src="@{'data:image/png;base64,' + ${car.getImageEncoded()}}"
+                     alt="Card image cap" src="" style="height: 14rem">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${car.getBrand() + ' ' + car.getModel()}">aaa</h5>
+                    <div class="card-text">
+                        <p th:text="'Production year: ' + ${car.getProductionYear()}"></p>
+                        <p th:text="'Mileage: ' + ${car.getMileage()}"></p>
+                        <p th:text="'Price for a day: ' +${car.getRentPrice()}"></p>
+                        <div style="font-size: 1.5em">
+                            <a th:href="@{|/car/${car.getId()}/details|}"><i class="fas fa-info-circle"></i></a>
+                            <span sec:authorize="hasAnyRole('ROLE_OWNER', 'ROLE_ADMIN')">
+                                <a th:href="@{|/car/${car.getId()}/edit|}"><i class="fas fa-edit"></i></a>
+                                <a th:href="@{|/car/${car.getId()}/delete|}"><i class="fas fa-trash-alt"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

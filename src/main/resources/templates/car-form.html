@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main.html}">
+<head>
+    <title>CarRental</title>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="row">
+        <div class="container">
+            <h3>Add car</h3>
+            <form th:action="@{/car/{id}/process-form(id=${car.getId()!=null?car.getId():0})}" th:object="${car}"
+                  method="POST" enctype="multipart/form-data"
+                  class="form-signin">
+                <div class="form-group row">
+                    <label for="brand" class="col-sm-2 col-form-label">Brand</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="brand" name="brand"
+                               class="form-control"
+                               th:value="${car.getBrand() != null ? car.getBrand() : ''}"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="model" class="col-sm-2 col-form-label">Model</label>
+                    <div class="col-sm-10">
+                        <input type="text"
+                               id="model"
+                               name="model"
+                               class="form-control"
+                               th:value="${car.getModel() != null ? car.getModel() : ''}"/>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label for="productionYear" class="col-sm-2 col-form-label">Production year</label>
+                    <div class="col-sm-10">
+                        <input type="number" id="productionYear"
+                               name="productionYear"
+                               class="form-control"
+                               th:value="${car.getProductionYear() != 0 ? car.getProductionYear() : ''}"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="mileage" class="col-sm-2 col-form-label">Mileage</label>
+                    <div class="col-sm-10">
+                        <input type="number"
+                               id="mileage"
+                               name="mileage"
+                               class="form-control"
+                               th:value="${car.getMileage() != 0 ? car.getMileage() : ''}"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="rentPrice" class="col-sm-2 col-form-label">Rent price</label>
+                    <div class="col-sm-10">
+                        <input type="number"
+                               id="rentPrice"
+                               name="rentPrice"
+                               class="form-control"
+                               th:value="${car.getRentPrice() != 0 ? car.getRentPrice() : ''}"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="available" class="col-sm-2 col-form-label">Available</label>
+                    <div class="col-sm-10">
+                        <input type="checkbox"
+                               id="available"
+                               name="available"
+                               class="form-check-inline"
+                               th:checked="${car.isAvailable()}"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="available" class="col-sm-2 col-form-label">Image</label>
+                    <div class="col-sm-10">
+                        <input type="file"
+                               id="file"
+                               name="file"
+                               class="form-check-inline"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

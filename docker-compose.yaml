@@ -1,0 +1,50 @@
+version: '2'
+
+services:
+  mysql:
+    image: mysql:5.5
+    command: --character-set-server=utf8 --collation-server=utf8_general_ci
+    env_file:
+      - env.env
+    mem_limit: 200m
+    ports:
+      - 3306:3306
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - mysql
+    env_file:
+      - env.env
+    ports:
+      - 8082:80
+    depends_on:
+      - mysql
+  app:
+    build: ./app
+    depends_on:
+      - mysql
+    ports:
+      - 8181:8181
+    volumes:
+      - ./:/usr/src/mymaven
+    env_file:
+      - env.env
+  package:
+    build: ./app
+    entrypoint: mvn package
+    volumes:
+      - ./:/usr/src/mymaven
+    env_file:
+      - env.env
+
+  run:
+    build: ./app
+    entrypoint: java -jar ./target/CarRental.jar
+    depends_on:
+      - mysql
+    ports:
+      - 8181:8181
+    volumes:
+      - ./:/usr/src/mymaven
+    env_file:
+      - env.env
