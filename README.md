@@ -16,3 +16,8 @@ Web application (Maven/Spring) - Car Rental service. It provides following funct
 - user authentication
 
 ## Technologies used
+- Java 11
+- Docker
+- Spring Boot
+- Maven
+- MySQL
